@@ -1,0 +1,222 @@
+/* Categories Section Styles */
+
+.bsr-categories {
+    background: var(--bsr-mint);
+    padding: 60px 0;
+}
+
+.bsr-categories h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-categories-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+}
+
+.bsr-categories-sidebar {
+    background: var(--bsr-white);
+    padding: 30px 25px;
+    border-radius: var(--bsr-radius);
+    box-shadow: var(--bsr-shadow);
+    height: fit-content;
+}
+
+.bsr-categories-sidebar h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-brand-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+.bsr-brand-list li {
+    margin-bottom: 0.5rem;
+}
+
+.bsr-brand-list a {
+    color: var(--bsr-text-dark);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.bsr-brand-list a:hover,
+.bsr-brand-list a.active {
+    color: var(--bsr-accent);
+    text-decoration: none;
+}
+
+.bsr-submenu {
+    margin-left: 20px;
+    font-size: 0.9rem;
+    color: var(--bsr-gray-dark);
+}
+
+.bsr-product-types {
+    border-top: 1px solid var(--bsr-gray-medium);
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.bsr-all-categories {
+    background: var(--bsr-gray-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--bsr-radius-sm);
+    font-size: 0.9rem;
+    color: var(--bsr-text-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bsr-all-categories:hover {
+    background: var(--bsr-gray-medium);
+}
+
+.bsr-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.bsr-category-card {
+    background: var(--bsr-white);
+    border-radius: var(--bsr-radius);
+    padding: 30px 25px;
+    box-shadow: var(--bsr-shadow);
+    transition: all 0.3s ease;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bsr-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.bsr-category-card h3 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--bsr-text-dark);
+}
+
+/* Category card brand colors */
+.bsr-card-ilcsi h3 {
+    color: var(--bsr-accent);
+}
+
+.bsr-card-luxoya h3 {
+    color: #E8A87C;
+}
+
+.bsr-card-farmavita h3 {
+    color: var(--bsr-gray-dark);
+}
+
+.bsr-card-lifestyle h3 {
+    color: #E8A87C;
+}
+
+.bsr-card-makeup h3 {
+    color: #E8A87C;
+}
+
+.bsr-card-lashes h3 {
+    color: var(--bsr-gray-dark);
+}
+
+.bsr-category-card p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--bsr-gray-dark);
+    margin-bottom: 1rem;
+}
+
+.bsr-category-btn {
+    background: var(--bsr-accent);
+    color: var(--bsr-white);
+    padding: 8px 16px;
+    border-radius: var(--bsr-radius-sm);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.bsr-category-btn:hover {
+    background: #45B8B0;
+    text-decoration: none;
+    color: var(--bsr-white);
+}
+
+.bsr-category-image {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--bsr-radius-sm);
+    margin-bottom: 15px;
+}
+
+/* Categories Section Mobile */
+@media (max-width: 1024px) {
+    .bsr-categories-layout {
+        grid-template-columns: 250px 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bsr-categories {
+        padding: 40px 0;
+    }
+    
+    .bsr-categories h2 {
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+    }
+    
+    .bsr-categories-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .bsr-categories-sidebar {
+        order: 2;
+        padding: 20px;
+    }
+    
+    .bsr-categories-grid {
+        order: 1;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .bsr-category-card {
+        padding: 20px;
+        min-height: 120px;
+    }
+    
+    .bsr-category-card h3 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bsr-categories h2 {
+        font-size: 1.4rem;
+    }
+}

@@ -1,0 +1,134 @@
+/* Values Section Styles */
+
+.bsr-values {
+    background: var(--bsr-cream);
+    padding: 60px 0;
+}
+
+.bsr-values-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.bsr-values-text h2 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+}
+
+.bsr-value-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+}
+
+.bsr-value-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--bsr-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.bsr-value-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-value-content p {
+    color: var(--bsr-gray-dark);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.bsr-values-image {
+    position: relative;
+}
+
+.bsr-model-img,
+.bsr-model-placeholder {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--bsr-radius);
+    box-shadow: var(--bsr-shadow);
+}
+
+.bsr-model-placeholder {
+    background: var(--bsr-gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bsr-gray-medium);
+}
+
+.bsr-botanical-frame {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    pointer-events: none;
+}
+
+.bsr-leaf-left {
+    top: 20px;
+    left: -10px;
+    width: 30px;
+    height: 30px;
+}
+
+.bsr-leaf-right {
+    bottom: 20px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+}
+
+/* Values Section Mobile */
+@media (max-width: 768px) {
+    .bsr-values {
+        padding: 40px 0;
+    }
+    
+    .bsr-values-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .bsr-values-text {
+        order: 2;
+    }
+    
+    .bsr-values-image {
+        order: 1;
+    }
+    
+    .bsr-values-text h2 {
+        font-size: 1.5rem;
+    }
+    
+    .bsr-value-item {
+        justify-content: center;
+        text-align: left;
+        max-width: 400px;
+        margin: 0 auto 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bsr-values-text h2 {
+        font-size: 1.3rem;
+    }
+}

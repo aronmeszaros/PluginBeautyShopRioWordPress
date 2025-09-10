@@ -1,0 +1,179 @@
+/* Beauty Shop Rio Plugin - Core Styles */
+
+:root {
+    --bsr-mint: #B8D4C7;
+    --bsr-cream: #F5F1E8;
+    --bsr-white: #FFFFFF;
+    --bsr-gray-light: #F8F8F8;
+    --bsr-gray-medium: #E0E0E0;
+    --bsr-gray-dark: #666666;
+    --bsr-text-dark: #2D2D2D;
+    --bsr-accent: #4ECDC4;
+    --bsr-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --bsr-radius: 12px;
+    --bsr-radius-sm: 8px;
+}
+
+/* Reset and Base Styles */
+.bsr-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+.bsr-hero h1{
+    font-family: 'Vintage';
+    font-weight: 100;
+    color: var(--bsr-text-dark);
+    margin-bottom: 1rem;
+}
+.bsr-values h2,
+.bsr-categories h2,
+.bsr-newsletter h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 300;
+    color: var(--bsr-text-dark);
+    margin-bottom: 1.5rem;
+}
+
+/* Common Button Styles */
+.bsr-nav-btn {
+    background: var(--bsr-white);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--bsr-shadow);
+    transition: all 0.3s ease;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Common Form Styles */
+.bsr-email-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--bsr-gray-medium);
+    border-radius: var(--bsr-radius-sm);
+    font-size: 0.95rem;
+    background: var(--bsr-white);
+    transition: all 0.3s ease;
+}
+
+.bsr-email-input:focus {
+    outline: none;
+    border-color: var(--bsr-accent);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+}
+
+.bsr-submit-btn {
+    background: var(--bsr-accent);
+    color: var(--bsr-white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--bsr-radius-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.bsr-submit-btn:hover {
+    background: #45B8B0;
+    transform: translateY(-1px);
+}
+
+/* Common Price Styles */
+.bsr-old-price {
+    text-decoration: line-through;
+    color: var(--bsr-gray-dark);
+    font-size: 0.9rem;
+}
+
+.bsr-price-current,
+.bsr-current-price {
+    background: var(--bsr-gray-light);
+    padding: 4px 12px;
+    border-radius: var(--bsr-radius-sm);
+    font-weight: 600;
+    color: var(--bsr-text-dark);
+}
+
+/* Common Link Styles */
+.bsr-shop-btn {
+    display: inline-block;
+    background: var(--bsr-white);
+    color: var(--bsr-text-dark);
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: var(--bsr-shadow);
+    transition: all 0.3s ease;
+}
+
+.bsr-shop-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+    color: var(--bsr-text-dark);
+}
+
+/* Common Botanical Elements */
+.bsr-leaf,
+.bsr-lavender {
+    position: absolute;
+    opacity: 0.6;
+}
+
+.bsr-leaf-1,
+.bsr-leaf-2,
+.bsr-leaf-left,
+.bsr-leaf-right,
+.bsr-leaf-tl,
+.bsr-leaf-tr,
+.bsr-leaf-footer {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234A5D23"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>') no-repeat center;
+    background-size: contain;
+}
+
+/* Responsive Base Styles */
+@media (max-width: 1024px) {
+    .bsr-container {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bsr-container {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bsr-container {
+        padding: 0 15px;
+    }
+    
+    .bsr-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/*Overrides*/
+.ast-theme-transparent-header #masthead .site-logo-img .transparent-custom-logo img{
+    max-width: 50px !important;
+}
+.ast-logo-title-inline .ast-site-identity{
+    padding: 0px !important;
+}

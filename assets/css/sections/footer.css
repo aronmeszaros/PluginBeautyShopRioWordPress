@@ -1,0 +1,140 @@
+/* Footer Section Styles */
+
+.bsr-footer {
+    background: var(--bsr-mint);
+    padding: 40px 0 20px;
+    position: relative;
+}
+
+.bsr-footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 2rem;
+}
+
+.bsr-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bsr-logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-footer-info p {
+    font-size: 0.85rem;
+    color: var(--bsr-gray-dark);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.bsr-footer-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.bsr-footer-col h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--bsr-text-dark);
+    margin-bottom: 1rem;
+}
+
+.bsr-footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bsr-footer-col ul li {
+    margin-bottom: 0.5rem;
+}
+
+.bsr-footer-col a {
+    font-size: 0.85rem;
+    color: var(--bsr-gray-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.bsr-footer-col a:hover {
+    color: var(--bsr-text-dark);
+    text-decoration: none;
+}
+
+.bsr-footer-social {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bsr-social-link {
+    font-size: 0.9rem;
+    color: var(--bsr-gray-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.bsr-social-link:hover {
+    color: var(--bsr-text-dark);
+    text-decoration: none;
+}
+
+.bsr-botanical-footer {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    pointer-events: none;
+}
+
+.bsr-leaf-footer {
+    width: 40px;
+    height: 40px;
+    opacity: 0.4;
+}
+
+.bsr-footer-bottom {
+    border-top: 1px solid rgba(45, 45, 45, 0.1);
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.bsr-footer-bottom p {
+    font-size: 0.8rem;
+    color: var(--bsr-gray-dark);
+    margin: 0;
+}
+
+/* Footer Section Mobile */
+@media (max-width: 768px) {
+    .bsr-footer {
+        padding: 30px 0 15px;
+    }
+    
+    .bsr-footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        text-align: center;
+    }
+    
+    .bsr-footer-links {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .bsr-footer-social {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .bsr-botanical-footer {
+        display: none;
+    }
+}

@@ -1,0 +1,630 @@
+/* Hero Section Styles */
+
+/* Hide mobile by default, show desktop */
+.bsr-hero-mobile {
+    display: none;
+}
+
+.bsr-hero-desktop {
+    display: block;
+}
+
+/* Desktop Hero Layout */
+.bsr-hero-desktop {
+    background: linear-gradient(227deg, #B8D4C7 0%, #A8C8BB 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.bsr-hero-content-desktop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: 600px;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Background decorative images */
+.bsr-hero-bg-top,
+.bsr-hero-bg-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+}
+
+.bsr-hero-bg-top {
+    top: 0;
+    height: 200px;
+    align-items: start;
+}
+
+.bsr-hero-bg-bottom {
+    bottom: 0;
+    height: 200px;
+}
+
+.bsr-bg-decoration {
+    object-fit: cover;
+}
+
+/* Left Side: Product Showcase */
+.bsr-hero-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.bsr-navigation-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 40px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Navigation arrows - vertical stack touching left edge */
+.bsr-hero-nav-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center; /* Add this to center the buttons */
+}
+
+.bsr-hero-nav-vertical .bsr-nav-btn {
+    width: 50px; /* Increase from 40px */
+    height: 50px; /* Increase from 40px */
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    min-width: 50px; /* Ensure minimum size */
+    min-height: 50px; /* Ensure minimum size */
+}
+
+.bsr-hero-nav-vertical .bsr-nav-btn:hover {
+    transform: translateY(-2px);
+}
+
+.bsr-hero-nav-vertical .bsr-nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Add this to ensure SVG is visible */
+.bsr-hero-nav-vertical .bsr-nav-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Navigation dots */
+.bsr-hero-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bsr-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bsr-dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+.bsr-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Featured Product */
+.bsr-featured-product {
+    margin-left: 100px; /* Space for navigation */
+    text-align: center;
+}
+
+.bsr-product-image-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.bsr-product-image {
+    max-width: 300px;
+    max-height: 400px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+}
+
+.bsr-product-placeholder {
+    width: 200px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(45, 45, 45, 0.5);
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+}
+
+/* Product Details Below Image */
+.bsr-product-details {
+    background: transparent; /* No background as requested */
+}
+
+.bsr-product-title {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--bsr-text-dark);
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.bsr-product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.bsr-add-to-cart-btn {
+    background: white;
+    color: var(--bsr-text-dark);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.bsr-add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.bsr-price-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bsr-price-display .bsr-current-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bsr-text-dark);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+/* Right Side: Brand & CTA */
+.bsr-hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bsr-brand-section {
+    /*max-width: 400px;*/
+}
+
+.bsr-main-title {
+    font-size: 3.5rem !important;
+    font-weight: 100;
+    font-family: "Vintage";
+    color: var(--bsr-text-dark);
+    margin-bottom: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.bsr-shop-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: var(--bsr-text-dark);
+    text-decoration: none;
+    padding: 6px 32px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    text-decoration: none !important;
+}
+
+.bsr-shop-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-shop-cta svg {
+    transition: transform 0.3s ease;
+}
+
+.bsr-shop-cta:hover svg {
+    transform: translateX(3px);
+}
+
+/* Legacy Hero Support (for backward compatibility) */
+.bsr-hero {
+    background: linear-gradient(227deg, var(--bsr-mint) 0%, #A8C8BB 100%);
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bsr-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.bsr-hero-main {
+    flex: 1;
+    text-align: center;
+}
+
+.bsr-brand-title h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--bsr-text-dark);
+    margin-bottom: 2rem;
+}
+
+.bsr-product-showcase {
+    display: inline-block;
+    background: var(--bsr-white);
+    border-radius: var(--bsr-radius);
+    padding: 20px;
+    box-shadow: var(--bsr-shadow);
+    margin-bottom: 2rem;
+}
+
+.bsr-product-img {
+    width: 120px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--bsr-radius-sm);
+    margin-bottom: 1rem;
+}
+
+.bsr-product-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--bsr-text-dark);
+}
+
+.bsr-price {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botanical Decorations for Legacy Hero */
+.bsr-botanical-decor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.bsr-botanical-top {
+    top: 0;
+    left: 0;
+}
+
+.bsr-leaf-1 {
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+}
+
+.bsr-leaf-2 {
+    top: 40px;
+    right: 100px;
+    width: 35px;
+    height: 35px;
+}
+
+.bsr-lavender-1 {
+    top: 60px;
+    right: 50px;
+    width: 20px;
+    height: 60px;
+    background: linear-gradient(to bottom, #8B5A96, #6B4C7A);
+    border-radius: 10px;
+}
+
+/* Mobile/Tablet Layout */
+@media (max-width: 1024px) {
+    .bsr-hero-desktop {
+        display: none;
+    }
+    
+    .bsr-hero-mobile {
+        display: block;
+        background: linear-gradient(227deg, #B8D4C7 0%, #A8C8BB 100%);
+        min-height: 100vh;
+        position: relative;
+    }
+    
+    /* Mobile Brand Title */
+    .bsr-mobile-brand-title {
+        text-align: center;
+        margin: 100px 0 0 0; /* Reduced top margin */
+        position: relative;
+        z-index: 5; /* Ensure it's above botanical elements */
+    }
+    
+    .bsr-mobile-brand-title h1 {
+        font-size: 2.5rem;
+        font-weight: 100; /* Match desktop weight */
+        font-family: "Vintage"; /* Match desktop font */
+        color: var(--bsr-text-dark);
+        margin: 0;
+    }
+    
+    /* Mobile Product Showcase */
+    .bsr-mobile-product-showcase {
+        position: relative;
+        padding: 0 0 100px 0;
+        text-align: center;
+        min-height: 400px;
+        z-index: 2; /* Ensure it's above botanical elements */
+    }
+    
+    .bsr-mobile-nav-arrows {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 5;
+    }
+    
+    .bsr-mobile-nav-btn {
+        width: 44px;
+        height: 44px;
+        border: none;
+        color: var(--bsr-text-dark);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+    }
+
+    .bsr-mobile-nav-btn svg {
+        width: 26px; /* Explicit SVG size */
+        height: 26px;
+        flex-shrink: 0;
+    }
+    
+    .bsr-mobile-product {
+        padding: 30px 20px;
+        margin: 0 auto;
+        max-width: 280px;
+        min-height: 320px; /* Fixed minimum height */
+        height: 520px;
+    }
+    
+    .bsr-mobile-product-image {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        max-height: 300px;
+        object-fit: contain;
+        margin-bottom: 20px;
+    }
+    
+    .bsr-mobile-product-placeholder {
+        width: 200px;
+        height: 200px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: #999;
+    }
+    
+    .bsr-mobile-product-info h3 {
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color: var(--bsr-text-dark);
+    }
+    
+    .bsr-mobile-price-action {
+        margin-top: 20px;
+    }
+
+    .bsr-mobile-buy-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .bsr-buy-text {
+        font-weight: 500;
+        color: var(--bsr-text-dark);
+        font-size: 0.95rem;
+    }
+
+    .bsr-price-separator {
+        width: 1px;
+        height: 20px;
+        background: #ddd;
+        margin: 0 15px;
+    }
+
+    .bsr-price-section {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    /* Mobile Dots */
+    .bsr-mobile-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .bsr-mobile-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transition: all 0.3s ease;
+    }
+    
+    .bsr-mobile-dot.active {
+        background: white;
+        transform: scale(1.3);
+    }
+    
+    /* Mobile Botanical Elements */
+    .bsr-mobile-botanical-top,
+    .bsr-mobile-botanical-bottom {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 0;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+    }
+
+    .bsr-mobile-botanical-top {
+        top: 0;
+        height: 150px;
+    }
+
+    .bsr-mobile-botanical-bottom {
+        bottom: 0;
+        height: 150px;
+    }
+
+    .bsr-mobile-bg-decoration {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* Legacy Hero Mobile Styles */
+    .bsr-hero {
+        min-height: 400px;
+    }
+    
+    .bsr-hero-content {
+        flex-direction: column;
+        padding: 20px 0;
+        gap: 20px;
+    }
+    
+    .bsr-hero-nav {
+        order: 2;
+        display: flex;
+        gap: 20px;
+    }
+    
+    .bsr-brand-title h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .bsr-product-showcase {
+        padding: 15px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .bsr-product-img,
+    .bsr-product-placeholder {
+        width: 100px;
+        height: 130px;
+    }
+}
+
+/* Small Mobile Adjustments */
+@media (max-width: 480px) {
+    .bsr-mobile-brand-title h1 {
+        font-size: 2rem;
+    }
+    
+    .bsr-main-title {
+        font-size: 2.8rem;
+    }
+    
+    .bsr-mobile-product {
+        max-width: 250px;
+        padding: 25px 15px;
+    }
+    
+    .bsr-product-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .bsr-add-to-cart-btn {
+        width: 100%;
+    }
+    
+    .bsr-brand-title h1 {
+        font-size: 1.6rem;
+    }
+    
+    .bsr-product-showcase {
+        padding: 12px;
+    }
+}
