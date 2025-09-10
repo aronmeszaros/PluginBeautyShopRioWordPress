@@ -640,10 +640,10 @@
             
             if ($button.find('.bsr-buy-text').length) {
                 // Mobile button
-                $button.find('.bsr-buy-text').text('Pridávam...');
+                $button.find('.bsr-buy-text').text('Presmerujem...');
             } else {
                 // Desktop button
-                $button.text('Pridávam...');
+                $button.text('Presmerujem...');
             }
             
             // Simulate cart addition (replace with actual WooCommerce AJAX)

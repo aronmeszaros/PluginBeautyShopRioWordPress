@@ -23,7 +23,7 @@ class BSR_Hero_Section {
             'product_image' => BSR_PLUGIN_URL . 'assets/images/aha-medlar.png',
             'product_title' => 'AHA medlar',
             'product_price' => '14.90€',
-            'shop_url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/hyaluron-peptid-kolagen-maska-100ml',
+            'shop_url' => '/shop',
             'featured_products' => '', // JSON array of featured products
             'current_index' => 0
         ), $atts);
@@ -167,7 +167,7 @@ class BSR_Hero_Section {
 
                 <!-- Mobile Botanical Top -->
                 <div class="bsr-mobile-botanical-top">
-                    <img src="<?php echo BSR_PLUGIN_URL . 'assets/images/hero-bg-top.png'; ?>" alt="" class="bsr-mobile-bg-decoration">
+                    <img src="<?php echo BSR_PLUGIN_URL . 'assets/images/bsr-mobile-top.png'; ?>" alt="" class="bsr-mobile-bg-decoration">
                 </div>
                 
                 <!-- Mobile Brand Title -->
@@ -229,7 +229,7 @@ class BSR_Hero_Section {
                 
                 <!-- Mobile decorative elements -->
                 <div class="bsr-mobile-botanical-bottom">
-                    <img src="<?php echo BSR_PLUGIN_URL . 'assets/images/hero-bg-bottom.png'; ?>" alt="" class="bsr-mobile-bg-decoration">
+                    <img src="<?php echo BSR_PLUGIN_URL . 'assets/images/bsr-mobile-bottom.png'; ?>" alt="" class="bsr-mobile-bg-decoration">
                 </div>
             </div>
         </section>

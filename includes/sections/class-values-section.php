@@ -19,12 +19,21 @@ class BSR_Values_Section {
     }
     
     public function render($atts) {
-        $atts = shortcode_atts(array(
-            'model_image' => '',
-            'title' => 'Starostlivost o pleť pomocou prípravkov vyrobených z prírodných látok',
+        // Build a reliable default URL (works even if your constant is missing or lacks a slash)
+        $default_model = BSR_PLUGIN_URL . 'assets/images/modelWithIlcsi.webp';
+
+        $defaults = array(
+            'model_image'  => $default_model,
+            'title'        => 'Starostlivosť o pleť pomocou prípravkov vyrobených z prírodných látok',
             'organic_text' => 'Zabezpečte každého produktu do poprednej linka prvky používané v prirodzene látky a prírody.',
-            'usage_text' => 'Zabezpečte každého produktu do poprednej linka prvky používané v prirodzene látky a prírody.'
-        ), $atts);
+            'usage_text'   => 'Zabezpečte každého produktu do poprednej linka prvky používané v prirodzene látky a prírody.'
+        );
+
+        // Merge, but keep defaults when incoming values are empty ("")
+        $atts = shortcode_atts($defaults, $atts);
+        if (empty($atts['model_image'])) {
+            $atts['model_image'] = $defaults['model_image'];
+        }
         
         ob_start();
         ?>
@@ -57,10 +66,6 @@ class BSR_Values_Section {
                         <?php else: ?>
                             <div class="bsr-model-placeholder">Model Image</div>
                         <?php endif; ?>
-                        <div class="bsr-botanical-frame">
-                            <div class="bsr-leaf bsr-leaf-left"></div>
-                            <div class="bsr-leaf bsr-leaf-right"></div>
-                        </div>
                     </div>
                 </div>
             </div>

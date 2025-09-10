@@ -177,3 +177,10 @@
 .ast-logo-title-inline .ast-site-identity{
     padding: 0px !important;
 }
+
+@media (max-width: 544px) {
+    .ast-desktop .ast-primary-header-bar.main-header-bar, .ast-header-break-point #masthead .ast-primary-header-bar.main-header-bar {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}

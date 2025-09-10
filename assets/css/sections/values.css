@@ -52,15 +52,14 @@
 
 .bsr-values-image {
     position: relative;
+    text-align: center;
 }
 
 .bsr-model-img,
 .bsr-model-placeholder {
     width: 100%;
-    max-width: 300px;
-    height: 200px;
     object-fit: cover;
-    border-radius: var(--bsr-radius);
+    border-radius: 20px;
     box-shadow: var(--bsr-shadow);
 }
 
@@ -70,29 +69,6 @@
     align-items: center;
     justify-content: center;
     color: var(--bsr-gray-medium);
-}
-
-.bsr-botanical-frame {
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    pointer-events: none;
-}
-
-.bsr-leaf-left {
-    top: 20px;
-    left: -10px;
-    width: 30px;
-    height: 30px;
-}
-
-.bsr-leaf-right {
-    bottom: 20px;
-    right: -10px;
-    width: 30px;
-    height: 30px;
 }
 
 /* Values Section Mobile */
@@ -113,6 +89,11 @@
     
     .bsr-values-image {
         order: 1;
+    }
+
+    .bsr-model-img,
+    .bsr-model-placeholder {
+        max-width: 400px;
     }
     
     .bsr-values-text h2 {
