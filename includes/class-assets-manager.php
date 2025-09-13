@@ -11,6 +11,7 @@ class BSR_Assets_Manager {
     
     private static $instance = null;
     private $loaded_sections = array();
+    private $section_scripts = array(); // Track which section scripts are loaded
     
     public static function get_instance() {
         if (null === self::$instance) {
@@ -33,6 +34,7 @@ class BSR_Assets_Manager {
         if ($this->should_load_assets()) {
             $this->detect_and_load_sections();
             $this->enqueue_scripts_js();
+            $this->enqueue_section_scripts(); // New method for section-specific JS
         }
     }
     
@@ -77,6 +79,7 @@ class BSR_Assets_Manager {
             has_shortcode($content, 'bsr_woo_categories') || 
             has_shortcode($content, 'bsr_full_page')) {
             $this->enqueue_section_style('categories');
+            $this->enqueue_section_script('categories'); // Load categories JS
         }
         
         // Check for newsletter section
@@ -110,6 +113,78 @@ class BSR_Assets_Manager {
             
             $this->loaded_sections[] = $section;
         }
+    }
+    
+    /**
+     * Enqueue section-specific JavaScript files
+     */
+    private function enqueue_section_script($section) {
+        if (in_array($section, $this->section_scripts)) {
+            return; // Already loaded
+        }
+        
+        $js_path = BSR_PLUGIN_PATH . 'assets/js/' . $section . '.js';
+        $js_url = BSR_PLUGIN_URL . 'assets/js/' . $section . '.js';
+        
+        if (file_exists($js_path)) {
+            // Dependencies array - add jQuery and main script
+            $deps = array('jquery');
+            if (file_exists(BSR_PLUGIN_PATH . 'assets/js/script.js')) {
+                $deps[] = 'beauty-shop-rio-script';
+            }
+            
+            wp_enqueue_script(
+                'bsr-' . $section,
+                $js_url,
+                $deps,
+                filemtime($js_path),
+                true
+            );
+            
+            // Add section-specific localizations
+            $this->add_section_localizations($section);
+            
+            $this->section_scripts[] = $section;
+        }
+    }
+    
+    /**
+     * Add section-specific JavaScript localizations
+     */
+    private function add_section_localizations($section) {
+        switch ($section) {
+            case 'categories':
+                wp_localize_script('bsr-categories', 'bsr_categories', array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    'nonce' => wp_create_nonce('bsr_categories_nonce'),
+                    'loading_text' => __('Načítava sa...', 'beauty-shop-rio'),
+                    'error_text' => __('Nastala chyba pri načítavaní.', 'beauty-shop-rio'),
+                    'no_brands_text' => __('Žiadne značky nie sú momentálne k dispozícii.', 'beauty-shop-rio'),
+                    'no_categories_text' => __('Žiadne kategórie produktov nie sú momentálne k dispozícii.', 'beauty-shop-rio')
+                ));
+                break;
+            
+            // Add other section localizations as needed
+            case 'newsletter':
+                // If newsletter has its own JS in the future
+                break;
+        }
+    }
+    
+    /**
+     * Enqueue section-specific scripts for dynamic content
+     */
+    private function enqueue_section_scripts() {
+        global $post;
+        
+        if (!is_a($post, 'WP_Post')) {
+            return;
+        }
+        
+        $content = $post->post_content;
+        
+        // Check if any section needs additional JS files
+        // This is separate from the main script.js to keep things modular
     }
     
     private function should_load_assets() {
@@ -147,7 +222,7 @@ class BSR_Assets_Manager {
                 true
             );
             
-            // Add AJAX localization
+            // Add general AJAX localization
             wp_localize_script('beauty-shop-rio-script', 'bsr_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('bsr_nonce')
@@ -169,7 +244,9 @@ class BSR_Assets_Manager {
             'mint' => '#B8D4C7',
             'cream' => '#F5F1E8',
             'accent' => '#4ECDC4',
-            'text_dark' => '#2D2D2D'
+            'text_dark' => '#2D2D2D',
+            'primary_color' => '#00b5a5', // Add primary color for categories
+            'section_bg' => '#c8d4d0' // Add section background
         ));
         
         ?>
@@ -179,30 +256,50 @@ class BSR_Assets_Manager {
                 --bsr-cream: <?php echo esc_attr($colors['cream']); ?>;
                 --bsr-accent: <?php echo esc_attr($colors['accent']); ?>;
                 --bsr-text-dark: <?php echo esc_attr($colors['text_dark']); ?>;
+                --bsr-primary-color: <?php echo esc_attr($colors['primary_color']); ?>;
+                --bsr-section-bg: <?php echo esc_attr($colors['section_bg']); ?>;
+                --bsr-text-primary: #1a3d3d;
+                --bsr-text-secondary: #6b7c78;
+                --bsr-container-width: 1200px;
+                --bsr-container-padding: 20px;
+                --bsr-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             }
         </style>
         <?php
     }
     
     /**
-     * Force load specific section styles (for AJAX or dynamic content)
+     * Force load specific section styles and scripts (for AJAX or dynamic content)
      */
-    public function force_load_section($section) {
+    public function force_load_section($section, $with_script = false) {
         $this->enqueue_section_style($section);
+        
+        if ($with_script) {
+            $this->enqueue_section_script($section);
+        }
     }
     
     /**
      * Get loaded sections for debugging
      */
     public function get_loaded_sections() {
-        return $this->loaded_sections;
+        return array(
+            'styles' => $this->loaded_sections,
+            'scripts' => $this->section_scripts
+        );
     }
     
     /**
      * Check if a specific section is loaded
      */
-    public function is_section_loaded($section) {
-        return in_array($section, $this->loaded_sections);
+    public function is_section_loaded($section, $type = 'style') {
+        if ($type === 'style') {
+            return in_array($section, $this->loaded_sections);
+        } elseif ($type === 'script') {
+            return in_array($section, $this->section_scripts);
+        }
+        
+        return false;
     }
     
     /**
@@ -210,8 +307,14 @@ class BSR_Assets_Manager {
      */
     public function load_all_sections() {
         $sections = array('hero', 'values', 'categories', 'newsletter', 'footer');
+        
         foreach ($sections as $section) {
             $this->enqueue_section_style($section);
+            
+            // Check if section has its own JS file
+            if (file_exists(BSR_PLUGIN_PATH . 'assets/js/' . $section . '.js')) {
+                $this->enqueue_section_script($section);
+            }
         }
     }
     

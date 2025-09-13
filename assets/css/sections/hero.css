@@ -388,7 +388,7 @@
     /* Mobile Brand Title */
     .bsr-mobile-brand-title {
         text-align: center;
-        margin: 100px 0 0 0; /* Reduced top margin */
+        margin: 130px 0 0 0; /* Reduced top margin */
         position: relative;
         z-index: 5; /* Ensure it's above botanical elements */
     }
@@ -602,6 +602,10 @@
 
 /* Small Mobile Adjustments */
 @media (max-width: 480px) {
+    .bsr-mobile-brand-title {
+        margin: 100px 0 0 0; /* Reduced top margin */
+    }
+
     .bsr-mobile-brand-title h1 {
         font-size: 2rem;
     }

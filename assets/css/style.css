@@ -184,3 +184,7 @@
         padding-right: 0px;
     }
 }
+
+.ast-theme-transparent-header.ast-header-break-point #ast-mobile-header > .ast-main-header-wrap > .main-header-bar{
+    margin-top: 10px !important;
+}
