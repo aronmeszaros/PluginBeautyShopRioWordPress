@@ -196,6 +196,13 @@
          * Create a category card HTML
          */
         createCategoryCard: function(category, index) {
+            // Parent name display - use top_parent_name
+            let parentNameHtml = '';
+            if (category.top_parent_name) {
+                parentNameHtml = `<span class="bsr-card-parent-name">${this.escapeHtml(category.top_parent_name)}</span>`;
+            }
+            
+            // Image HTML
             const imageHtml = category.image 
                 ? `<img src="${this.escapeHtml(category.image)}" 
                         alt="${this.escapeHtml(category.name)}" 
@@ -211,7 +218,11 @@
             return `
                 <div class="bsr-category-card">
                     <div class="bsr-card-content">
-                        <h3 class="bsr-card-title">${this.escapeHtml(category.name)}</h3>
+                        ${parentNameHtml}
+                        
+                        <h3 class="bsr-card-title ${category.top_parent_name ? 'has-parent' : ''}">
+                            ${this.escapeHtml(category.name)}
+                        </h3>
                         
                         <div class="bsr-card-image-wrapper">
                             ${imageHtml}

@@ -108,6 +108,18 @@
     height: 100%;
 }
 
+/* Parent Category Name (Brand) */
+.bsr-card-parent-name {
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--bsr-text-secondary, #6b7c78);
+    text-align: center;
+    margin-bottom: 5px;
+    font-family: var(--bsr-font-primary, inherit);
+    letter-spacing: 0.5px;
+}
+
 .bsr-card-title {
     font-size: clamp(20px, 3vw, 32px);
     font-weight: 300;
@@ -119,6 +131,11 @@
     justify-content: center;
     font-family: var(--bsr-font-primary, inherit);
     line-height: 1.2;
+}
+
+/* Adjust min-height when parent name is present */
+.bsr-card-title.has-parent {
+    min-height: 60px;
 }
 
 /* Brand title colors - cycling through palette */

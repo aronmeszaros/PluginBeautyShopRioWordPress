@@ -109,16 +109,16 @@ class BSR_Categories_Section {
     }
     
     /**
-     * Get top-level product categories with published products
+     * Replace the existing get_active_categories() method with this one
+     * This shows only leaf categories (categories without children)
      */
     private function get_active_categories() {
         $categories = array();
         
-        // Get top-level product categories
+        // Get ALL product categories, not just top-level
         $cat_terms = get_terms(array(
             'taxonomy' => 'product_cat',
             'hide_empty' => false,
-            'parent' => 0,
         ));
         
         if (!is_wp_error($cat_terms) && !empty($cat_terms)) {
@@ -128,31 +128,75 @@ class BSR_Categories_Section {
                     continue;
                 }
                 
-                // Check if category or its children have published products
-                if ($this->category_has_published_products($category->term_id)) {
-                    // Get category image
-                    $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
-                    $image_url = $thumbnail_id ? wp_get_attachment_url($thumbnail_id) : '';
-                    
-                    $categories[] = array(
-                        'id' => $category->term_id,
-                        'name' => $category->name,
-                        'slug' => $category->slug,
-                        'image' => $image_url,
-                        'link' => get_term_link($category),
-                        'count' => $category->count
-                    );
+                // Check if this category has any children
+                $children = get_terms(array(
+                    'taxonomy' => 'product_cat',
+                    'parent' => $category->term_id,
+                    'hide_empty' => false,
+                    'fields' => 'ids', // We only need IDs to check if any exist
+                ));
+                
+                // Only process categories WITHOUT children (leaf categories)
+                if (empty($children)) {
+                    // Check if this leaf category has published products (not including children since it has none)
+                    if ($this->category_has_published_products($category->term_id, false)) {
+                        // Get category image
+                        $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
+                        $image_url = $thumbnail_id ? wp_get_attachment_url($thumbnail_id) : '';
+                        
+                        // Get the absolute top-most parent category
+                        $top_parent_name = '';
+                        
+                        if ($category->parent > 0) {
+                            // Start from the current category and traverse up
+                            $current_term = $category;
+                            $top_parent = null;
+                            
+                            // Keep going up until we find the top (parent = 0)
+                            while ($current_term->parent > 0) {
+                                $parent_term = get_term($current_term->parent, 'product_cat');
+                                if (is_wp_error($parent_term)) {
+                                    break;
+                                }
+                                $top_parent = $parent_term;
+                                $current_term = $parent_term;
+                            }
+                            
+                            // If we found a top parent, use its name
+                            if ($top_parent) {
+                                $top_parent_name = $top_parent->name;
+                            }
+                        }
+                        
+                        $categories[] = array(
+                            'id' => $category->term_id,
+                            'name' => $category->name,
+                            'slug' => $category->slug,
+                            'image' => $image_url,
+                            'link' => get_term_link($category),
+                            'count' => $category->count,
+                            'parent_id' => $category->parent,
+                            'top_parent_name' => $top_parent_name, // This is what we'll display
+                        );
+                    }
                 }
             }
         }
+        
+        // Optional: Sort categories by name
+        usort($categories, function($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
         
         return $categories;
     }
     
     /**
      * Check if category has published products
+     * @param int $category_id Category ID
+     * @param bool $include_children Whether to include child categories
      */
-    private function category_has_published_products($category_id) {
+    private function category_has_published_products($category_id, $include_children = true) {
         $args = array(
             'post_type' => 'product',
             'post_status' => 'publish',
@@ -162,7 +206,7 @@ class BSR_Categories_Section {
                     'taxonomy' => 'product_cat',
                     'field' => 'term_id',
                     'terms' => $category_id,
-                    'include_children' => true,
+                    'include_children' => $include_children,
                 ),
             ),
         );
@@ -292,9 +336,52 @@ class BSR_Categories_Section {
                     
                     <!-- Product Types Grid -->
                     <div id="bsr-types-grid" class="bsr-category-grid">
-                        <div class="bsr-categories-loading">
-                            <div class="bsr-loading-spinner"></div>
-                        </div>
+                        <?php 
+                        // Load categories initially for testing
+                        $initial_categories = $this->get_active_categories();
+                        if (!empty($initial_categories)): 
+                            foreach ($initial_categories as $category): ?>
+                                <div class="bsr-category-card">
+                                    <div class="bsr-card-content">
+                                        <?php 
+                                        // Use top_parent_name if available, otherwise use parent_name
+                                        $display_parent = !empty($category['top_parent_name']) ? $category['top_parent_name'] : $category['parent_name'];
+                                        if (!empty($display_parent)): ?>
+                                            <span class="bsr-card-parent-name"><?php echo esc_html($display_parent); ?></span>
+                                        <?php endif; ?>
+                                        
+                                        <h3 class="bsr-card-title <?php echo !empty($category['parent_name']) ? 'has-parent' : ''; ?>">
+                                            <?php echo esc_html($category['name']); ?>
+                                        </h3>
+                                        
+                                        <div class="bsr-card-image-wrapper">
+                                            <?php if ($category['image']): ?>
+                                                <img src="<?php echo esc_url($category['image']); ?>" 
+                                                     alt="<?php echo esc_attr($category['name']); ?>" 
+                                                     class="bsr-card-image"
+                                                     loading="lazy">
+                                            <?php else: ?>
+                                                <div class="bsr-placeholder-image">
+                                                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                                                        <rect width="60" height="60" rx="8" fill="#f0f0f0"/>
+                                                        <path d="M30 20v20M20 30h20" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
+                                                    </svg>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        
+                                        <a href="<?php echo esc_url($category['link']); ?>" 
+                                           class="bsr-card-button">
+                                            <?php echo esc_html($atts['button_text']); ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endforeach;
+                        else: ?>
+                            <div class="bsr-categories-loading">
+                                <div class="bsr-loading-spinner"></div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

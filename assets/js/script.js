@@ -409,9 +409,6 @@
                 }
             });
             
-            // Touch/swipe support for mobile
-            this.initTouchSupport();
-            
             // Pause autoplay on hover
             $('.bsr-hero').on('mouseenter', () => {
                 this.pauseAutoplay();
@@ -425,40 +422,6 @@
                     this.pauseAutoplay();
                 } else {
                     this.startAutoplay();
-                }
-            });
-        }
-        
-        initTouchSupport() {
-            let startX = 0;
-            let startY = 0;
-            let endX = 0;
-            let endY = 0;
-            const minSwipeDistance = 50;
-            
-            $('.bsr-mobile-product-showcase, .bsr-featured-product').on({
-                touchstart: (e) => {
-                    startX = e.originalEvent.touches[0].clientX;
-                    startY = e.originalEvent.touches[0].clientY;
-                },
-                touchmove: (e) => {
-                    e.preventDefault(); // Prevent scrolling
-                },
-                touchend: (e) => {
-                    endX = e.originalEvent.changedTouches[0].clientX;
-                    endY = e.originalEvent.changedTouches[0].clientY;
-                    
-                    const deltaX = endX - startX;
-                    const deltaY = endY - startY;
-                    
-                    // Check if horizontal swipe is dominant
-                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-                        if (deltaX > 0) {
-                            this.previousProduct();
-                        } else {
-                            this.nextProduct();
-                        }
-                    }
                 }
             });
         }
@@ -759,7 +722,6 @@
             $(document).off('click', '.bsr-nav-btn, .bsr-mobile-prev, .bsr-mobile-next, .bsr-dot, .bsr-add-to-cart-btn, .bsr-mobile-buy-btn');
             $(document).off('keydown');
             $('.bsr-hero').off('mouseenter mouseleave');
-            $('.bsr-mobile-product-showcase, .bsr-featured-product').off('touchstart touchmove touchend');
         }
     }
     
