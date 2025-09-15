@@ -188,3 +188,150 @@
 .ast-theme-transparent-header.ast-header-break-point #ast-mobile-header > .ast-main-header-wrap > .main-header-bar{
     margin-top: 10px !important;
 }
+
+/* ===== Beauty Shop Rio – Instagram feed polish ===== */
+/* Scope to this section only */
+.uagb-block-903e8ae4{
+    background: linear-gradient(227deg, var(--bsr-mint) 0%, #A8C8BB 100%);
+}
+.uagb-block-903e8ae4 #sb_instagram{
+  --gap: 16px;
+  --radius: var(--bsr-radius, 12px);
+  --shadow: var(--bsr-shadow, 0 4px 20px rgba(0,0,0,.08));
+  --mint: var(--bsr-mint, #B8D4C7);
+  --cream: var(--bsr-cream, #F5F1E8);
+  --text: var(--bsr-text-dark, #2D2D2D);
+  --accent: var(--bsr-accent, #4ECDC4);
+}
+
+/* Section spacing */
+.uagb-block-903e8ae4 .uagb-container-inner-blocks-wrap{
+  padding-inline: clamp(12px, 3vw, 24px);
+}
+
+/* Title line */
+.uagb-block-903e8ae4 .uagb-heading-text{
+  letter-spacing: .02em;
+  color: var(--text);
+}
+.uagb-block-903e8ae4 .uagb-heading-text a{
+  color: var(--accent);
+  text-decoration: none;
+}
+.uagb-block-903e8ae4 .uagb-heading-text a:hover{
+  text-decoration: underline;
+}
+
+/* Header (avatar + bio) */
+.uagb-block-903e8ae4 #sb_instagram .sb_instagram_header{
+  background: #F2F2F2;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+}
+.uagb-block-903e8ae4 #sb_instagram .sbi_header_text{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.uagb-block-903e8ae4 #sb_instagram .sbi_header_img{
+  width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.uagb-block-903e8ae4 #sb_instagram .sbi_feedtheme_header_text h3{
+  margin: 0; font-size: 18px; color: var(--text); font-weight: 700;
+}
+.uagb-block-903e8ae4 #sb_instagram .sbi_bio{
+  margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: #666;
+}
+
+/* Grid – force neat gaps and square cards */
+.uagb-block-903e8ae4 #sbi_images{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap) !important;
+}
+@media (max-width: 1024px){
+  .uagb-block-903e8ae4 #sbi_images{ grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 640px){
+  .uagb-block-903e8ae4 #sbi_images{ grid-template-columns: 1fr; }
+}
+
+/* Cards */
+.uagb-block-903e8ae4 #sb_instagram .sbi_item .sbi_photo_wrap{
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--bsr-white, #fff);
+  position: relative;
+}
+.uagb-block-903e8ae4 #sb_instagram a.sbi_photo{
+  display: block;
+  aspect-ratio: 1 / 1;              /* keep squares clean */
+  width: 100%; height: auto;
+  transition: transform .35s ease, filter .35s ease;
+  will-change: transform;
+}
+.uagb-block-903e8ae4 #sb_instagram a.sbi_photo img{
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+/* Hover lift */
+.uagb-block-903e8ae4 #sb_instagram .sbi_item:hover .sbi_photo{
+  transform: scale(1.03);
+  filter: saturate(1.03);
+}
+
+/* Reel/Video play button – nicer contrast */
+.uagb-block-903e8ae4 #sb_instagram .sbi_playbtn{
+  width: 52px; height: 52px;
+  padding: 12px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(2px);
+  position: absolute; inset: auto 12px 12px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+
+/* “Load more” + “Follow” buttons */
+.uagb-block-903e8ae4 #sb_instagram #sbi_load{
+  display: flex; gap: 10px; align-items: center; justify-content: center;
+  margin-top: 18px;
+}
+.uagb-block-903e8ae4 #sb_instagram .sbi_load_btn,
+.uagb-block-903e8ae4 #sb_instagram .sbi_follow_btn a{
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: var(--shadow);
+  background: var(--accent) !important;
+  color: #fff !important;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.uagb-block-903e8ae4 #sb_instagram .sbi_follow_btn svg{ display:none; } /* keep it compact */
+.uagb-block-903e8ae4 #sb_instagram .sbi_load_btn:hover,
+.uagb-block-903e8ae4 #sb_instagram .sbi_follow_btn a:hover{
+  transform: translateY(-1px);
+  opacity: .95;
+}
+
+.sbi_follow_btn {
+    display: none !important;
+}
+
+/* Tighter inner gap than plugin’s inline style */
+.uagb-block-903e8ae4 #sb_instagram[sbi_width_resp] #sbi_images{ gap: var(--gap) !important; }
+
+/* Reduce the plugin’s inline padding-bottom */
+.uagb-block-903e8ae4 #sb_instagram{ padding-bottom: 0 !important; }
+
+/* Accessibility: focus outlines on cards */
+.uagb-block-903e8ae4 #sb_instagram a.sbi_photo:focus-visible{
+  outline: 3px solid color-mix(in oklab, var(--accent) 60%, white);
+  outline-offset: 3px;
+  border-radius: calc(var(--radius) - 2px);
+}

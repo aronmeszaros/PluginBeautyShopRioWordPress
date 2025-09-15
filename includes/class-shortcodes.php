@@ -66,7 +66,6 @@ class BSR_Shortcodes {
         $output .= BSR_Values_Section::get_instance()->render($atts);
         $output .= BSR_Categories_Section::get_instance()->render($atts);
         $output .= BSR_Newsletter_Section::get_instance()->render($atts);
-        $output .= BSR_Footer_Section::get_instance()->render($atts);
         
         return $output;
     }

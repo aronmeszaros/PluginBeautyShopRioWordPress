@@ -20,9 +20,9 @@ class BSR_Newsletter_Section {
     
     public function render($atts) {
         $atts = shortcode_atts(array(
-            'product_image' => '',
+            'product_image' => BSR_PLUGIN_URL . 'assets/images/newsletter.png',
             'title' => 'Prihlaste sa na odber noviniek',
-            'description' => 'Zasleve stranu e-mailovú adresu a buďte medzi prvými ktorí dostanú informácie o zľavách a novinkách.',
+            'description' => 'Zadajte svoju e-mailovú adresu a buďte medzi prvými, ktorí dostanú informácie o zľavách a novinkách.',
             'show_form' => 'true'
         ), $atts);
         
@@ -33,14 +33,13 @@ class BSR_Newsletter_Section {
                 <div class="bsr-newsletter-content">
                     <div class="bsr-newsletter-image">
                         <?php if ($atts['product_image']): ?>
-                            <img src="<?php echo esc_url($atts['product_image']); ?>" alt="Products">
+                            <img src="<?php echo $atts['product_image']; ?>" 
+                                                     alt="Newsletter Image" 
+                                                     class="bsr-card-image"
+                                                     loading="lazy">
                         <?php else: ?>
                             <div class="bsr-newsletter-placeholder">Newsletter Image</div>
                         <?php endif; ?>
-                        <div class="bsr-botanical-newsletter">
-                            <div class="bsr-leaf bsr-leaf-tl"></div>
-                            <div class="bsr-leaf bsr-leaf-tr"></div>
-                        </div>
                     </div>
                     
                     <div class="bsr-newsletter-form">

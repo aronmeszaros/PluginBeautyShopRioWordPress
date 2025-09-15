@@ -15,12 +15,6 @@
         // Initialize newsletter form
         initNewsletterForm();
         
-        // Initialize category interactions
-        initCategoryInteractions();
-        
-        // Initialize smooth scrolling
-        initSmoothScrolling();
-        
         // Add loading animations
         initAnimations();
     }
@@ -109,65 +103,6 @@
                 notification.remove();
             });
         }, 4000);
-    }
-
-    // Category Interactions
-    function initCategoryInteractions() {
-        // Category card hover effects
-        $('.bsr-category-card').on('mouseenter', function() {
-            $(this).find('h3').css('transform', 'translateY(-2px)');
-        }).on('mouseleave', function() {
-            $(this).find('h3').css('transform', 'translateY(0)');
-        });
-
-        // Brand list interactions
-        $('.bsr-brand-list a').on('click', function(e) {
-            e.preventDefault();
-            
-            // Update active state
-            $('.bsr-brand-list a').removeClass('active');
-            $(this).addClass('active');
-            
-            // Filter categories (simulate)
-            const brand = $(this).text().replace('→', '').replace('↓', '').trim();
-            filterCategories(brand);
-        });
-
-        // All categories button
-        $('.bsr-all-categories').on('click', function() {
-            $('.bsr-brand-list a').removeClass('active');
-            showAllCategories();
-        });
-    }
-
-    function filterCategories(brand) {
-        $('.bsr-category-card').each(function() {
-            const cardBrand = $(this).find('h3').text();
-            
-            if (cardBrand.toLowerCase().includes(brand.toLowerCase()) || brand === 'Všetky') {
-                $(this).fadeIn(300);
-            } else {
-                $(this).fadeOut(300);
-            }
-        });
-    }
-
-    function showAllCategories() {
-        $('.bsr-category-card').fadeIn(300);
-    }
-
-    // Smooth Scrolling
-    function initSmoothScrolling() {
-        $('a[href^="#"]').on('click', function(e) {
-            e.preventDefault();
-            
-            const target = $(this.getAttribute('href'));
-            if (target.length) {
-                $('html, body').animate({
-                    scrollTop: target.offset().top - 80
-                }, 800);
-            }
-        });
     }
 
     // Animations on Scroll
@@ -283,7 +218,6 @@
     // Add to global scope for external access
     window.BeautyShopRio = {
         updateHeroSlide: updateHeroSlide,
-        filterCategories: filterCategories,
         showNotification: showNotification
     };
 
@@ -776,3 +710,43 @@
     `).appendTo('head');
 
 })(jQuery);
+
+
+/*Insta*/
+document.addEventListener('DOMContentLoaded', () => {
+  const feed = document.querySelector('.uagb-block-903e8ae4 #sb_instagram');
+  if (!feed) return;
+
+  // Fade-in when images load
+  const reveal = el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; };
+  const styleCard = el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(6px)';
+    el.style.transition = 'opacity .4s ease, transform .4s ease';
+    const img = el.querySelector('img');
+    if (img && img.complete) requestAnimationFrame(() => reveal(el));
+    else if (img) img.addEventListener('load', () => reveal(el), { once:true });
+  };
+
+  const localizeButtons = () => {
+    const loadBtn = feed.querySelector('.sbi_load_btn .sbi_btn_text');
+    if (loadBtn) loadBtn.textContent = 'Zobraziť viac';
+    const followSpan = feed.querySelector('.sbi_follow_btn span');
+    if (followSpan) followSpan.textContent = 'Sledovať na Instagrame';
+  };
+
+  // Initial pass
+  feed.querySelectorAll('#sbi_images .sbi_item').forEach(styleCard);
+  localizeButtons();
+
+  // Watch for new items after "Load More"
+  const mo = new MutationObserver(muts => {
+    muts.forEach(m => {
+      m.addedNodes.forEach(n => {
+        if (n.nodeType === 1 && n.matches('.sbi_item')) styleCard(n);
+      });
+    });
+    localizeButtons();
+  });
+  mo.observe(feed.querySelector('#sbi_images'), { childList: true });
+
+});

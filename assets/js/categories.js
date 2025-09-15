@@ -1,6 +1,6 @@
 /**
- * Beauty Shop Rio - Categories Section JavaScript
- * Handles tab switching, AJAX loading, and read more functionality
+ * Beauty Shop Rio - Categories Section JavaScript with Pagination
+ * Handles tab switching, AJAX loading, read more functionality, and Load More
  */
 
 (function($) {
@@ -20,7 +20,16 @@
         // Module state
         state: {
             categoriesLoaded: false,
-            currentTab: 'brands'
+            currentTab: 'brands',
+            offsets: {
+                brands: 9, // Start from 9 since we load first 9 initially
+                types: 0
+            },
+            itemsPerPage: 9,
+            hasMore: {
+                brands: false,
+                types: false
+            }
         },
         
         /**
@@ -37,6 +46,15 @@
             this.elements.tabButtons = $('.bsr-tab-button');
             this.elements.brandsGrid = $('#bsr-brands-grid');
             this.elements.typesGrid = $('#bsr-types-grid');
+            
+            // Set items per page from localized data if available
+            if (typeof bsr_categories !== 'undefined' && bsr_categories.items_per_page) {
+                this.state.itemsPerPage = parseInt(bsr_categories.items_per_page);
+                this.state.offsets.brands = this.state.itemsPerPage; // Start from items_per_page since we load first batch initially
+            }
+            
+            // Check if brands has more items initially
+            this.state.hasMore.brands = this.elements.brandsGrid.find('.bsr-load-more-btn').length > 0;
             
             // Bind events
             this.bindEvents();
@@ -61,6 +79,12 @@
             $(document).on('click', '.bsr-read-more-btn', function(e) {
                 e.preventDefault();
                 self.handleReadMore($(this));
+            });
+            
+            // Load more functionality
+            $(document).on('click', '.bsr-load-more-btn', function(e) {
+                e.preventDefault();
+                self.handleLoadMore($(this));
             });
             
             // Handle window resize
@@ -139,7 +163,103 @@
         },
         
         /**
-         * Load product types via AJAX
+         * Handle Load More button click
+         */
+        handleLoadMore: function($button) {
+            const type = $button.data('type');
+            const currentOffset = this.state.offsets[type];
+            
+            // Show loading state
+            this.showLoadMoreLoading($button, true);
+            
+            // Load more items
+            this.loadMoreItems(type, currentOffset);
+        },
+        
+        /**
+         * Load more items via AJAX
+         */
+        loadMoreItems: function(type, offset) {
+            const self = this;
+            
+            if (typeof bsr_categories === 'undefined') {
+                console.error('BSR Categories: Ajax object not found');
+                return;
+            }
+            
+            $.ajax({
+                url: bsr_categories.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'bsr_load_more_categories',
+                    type: type,
+                    offset: offset,
+                    limit: this.state.itemsPerPage,
+                    nonce: bsr_categories.nonce
+                },
+                success: function(response) {
+                    if (response.success) {
+                        self.appendItems(type, response.data.items);
+                        self.state.offsets[type] += self.state.itemsPerPage;
+                        self.state.hasMore[type] = response.data.has_more;
+                        
+                        // Hide load more button if no more items
+                        if (!response.data.has_more) {
+                            self.hideLoadMoreButton(type);
+                        } else {
+                            self.showLoadMoreLoading(self.getLoadMoreButton(type), false);
+                        }
+                        
+                        // Reinitialize read more buttons for new items
+                        self.initReadMore();
+                    } else {
+                        console.error('BSR Categories Error:', response);
+                        self.showLoadMoreError(type);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('BSR Categories AJAX Error:', error);
+                    self.showLoadMoreError(type);
+                }
+            });
+        },
+        
+        /**
+         * Append new items to the grid
+         */
+        appendItems: function(type, items) {
+            const $grid = type === 'brands' ? this.elements.brandsGrid : this.elements.typesGrid;
+            const $loadMoreContainer = $grid.find('.bsr-load-more-container');
+            
+            let html = '';
+            
+            items.forEach(function(item, index) {
+                if (type === 'brands') {
+                    html += this.createBrandCard(item, this.state.offsets[type] - this.state.itemsPerPage + index);
+                } else {
+                    html += this.createCategoryCard(item, this.state.offsets[type] - this.state.itemsPerPage + index);
+                }
+            }.bind(this));
+            
+            // Insert new items before the load more container
+            if ($loadMoreContainer.length) {
+                $loadMoreContainer.before(html);
+            } else {
+                $grid.append(html);
+            }
+            
+            // Animate new items
+            const $newItems = $grid.find('.bsr-category-card').slice(-items.length);
+            $newItems.addClass('bsr-animate bsr-new-item');
+            
+            // Trigger animation
+            setTimeout(function() {
+                $newItems.addClass('bsr-visible');
+            }, 100);
+        },
+        
+        /**
+         * Load product types via AJAX (initial load)
          */
         loadProductTypes: function() {
             const self = this;
@@ -162,12 +282,21 @@
                 type: 'POST',
                 data: {
                     action: 'bsr_get_product_types',
+                    offset: 0,
+                    limit: this.state.itemsPerPage,
                     nonce: bsr_categories.nonce
                 },
                 success: function(response) {
-                    if (response.success && response.data.length > 0) {
-                        self.renderCategories(response.data);
+                    if (response.success) {
+                        self.renderCategories(response.data.items);
                         self.state.categoriesLoaded = true;
+                        self.state.offsets.types = self.state.itemsPerPage;
+                        self.state.hasMore.types = response.data.has_more;
+                        
+                        // Add load more button if needed
+                        if (response.data.has_more) {
+                            self.addLoadMoreButton('types');
+                        }
                     } else {
                         self.showEmptyState('types');
                     }
@@ -202,18 +331,20 @@
                 parentNameHtml = `<span class="bsr-card-parent-name">${this.escapeHtml(category.top_parent_name)}</span>`;
             }
             
-            // Image HTML
+            // Image HTML with placeholder
+            const placeholderUrl = typeof bsr_categories !== 'undefined' && bsr_categories.plugin_url
+                ? bsr_categories.plugin_url + 'assets/images/placeholder-products.png'
+                : '/wp-content/plugins/beauty-shop-rio/assets/images/placeholder-products.png';
+            
             const imageHtml = category.image 
                 ? `<img src="${this.escapeHtml(category.image)}" 
                         alt="${this.escapeHtml(category.name)}" 
                         class="bsr-card-image" 
                         loading="lazy">`
-                : `<div class="bsr-placeholder-image">
-                     <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                       <rect width="60" height="60" rx="8" fill="#f0f0f0"/>
-                       <path d="M30 20v20M20 30h20" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
-                     </svg>
-                   </div>`;
+                : `<img src="${placeholderUrl}" 
+                        alt="${this.escapeHtml(category.name)}" 
+                        class="bsr-card-image bsr-placeholder-img" 
+                        loading="lazy">`;
             
             return `
                 <div class="bsr-category-card">
@@ -237,68 +368,23 @@
         },
         
         /**
-         * Refresh brands via AJAX (optional functionality)
-         */
-        refreshBrands: function() {
-            const self = this;
-            
-            if (typeof bsr_categories === 'undefined') {
-                console.error('BSR Categories: Ajax object not found');
-                return;
-            }
-            
-            $.ajax({
-                url: bsr_categories.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'bsr_get_brands',
-                    nonce: bsr_categories.nonce
-                },
-                success: function(response) {
-                    if (response.success && response.data.length > 0) {
-                        self.renderBrands(response.data);
-                    } else {
-                        self.showEmptyState('brands');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('BSR Categories Error:', error);
-                    self.showErrorState('brands');
-                }
-            });
-        },
-        
-        /**
-         * Render brands in the grid
-         */
-        renderBrands: function(brands) {
-            let html = '';
-            
-            brands.forEach(function(brand, index) {
-                html += this.createBrandCard(brand, index);
-            }.bind(this));
-            
-            this.elements.brandsGrid.html(html);
-            
-            // Reinitialize read more buttons
-            this.initReadMore();
-        },
-        
-        /**
          * Create a brand card HTML
          */
         createBrandCard: function(brand, index) {
+            // Image HTML with placeholder
+            const placeholderUrl = typeof bsr_categories !== 'undefined' && bsr_categories.plugin_url
+                ? bsr_categories.plugin_url + 'assets/images/placeholder-products.png'
+                : '/wp-content/plugins/beauty-shop-rio/assets/images/placeholder-products.png';
+            
             const imageHtml = brand.image 
                 ? `<img src="${this.escapeHtml(brand.image)}" 
                         alt="${this.escapeHtml(brand.name)}" 
                         class="bsr-card-image" 
                         loading="lazy">`
-                : `<div class="bsr-placeholder-image">
-                     <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                       <rect width="60" height="60" rx="8" fill="#f0f0f0"/>
-                       <path d="M30 20v20M20 30h20" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
-                     </svg>
-                   </div>`;
+                : `<img src="${placeholderUrl}" 
+                        alt="${this.escapeHtml(brand.name)}" 
+                        class="bsr-card-image bsr-placeholder-img" 
+                        loading="lazy">`;
             
             let descriptionHtml = '';
             if (brand.description) {
@@ -345,6 +431,78 @@
         },
         
         /**
+         * Add load more button to grid
+         */
+        addLoadMoreButton: function(type) {
+            const $grid = type === 'brands' ? this.elements.brandsGrid : this.elements.typesGrid;
+            const loadMoreText = typeof bsr_categories !== 'undefined' && bsr_categories.load_more_text
+                ? bsr_categories.load_more_text
+                : 'Načítať viac';
+            
+            const buttonHtml = `
+                <div class="bsr-load-more-container">
+                    <button class="bsr-load-more-btn" data-type="${type}">
+                        <span class="bsr-load-more-text">${loadMoreText}</span>
+                        <div class="bsr-load-more-spinner" style="display: none;">
+                            <div class="bsr-spinner"></div>
+                        </div>
+                    </button>
+                </div>
+            `;
+            
+            $grid.append(buttonHtml);
+        },
+        
+        /**
+         * Get load more button for specified type
+         */
+        getLoadMoreButton: function(type) {
+            const $grid = type === 'brands' ? this.elements.brandsGrid : this.elements.typesGrid;
+            return $grid.find('.bsr-load-more-btn');
+        },
+        
+        /**
+         * Show/hide loading state on load more button
+         */
+        showLoadMoreLoading: function($button, loading) {
+            if (loading) {
+                $button.prop('disabled', true);
+                $button.find('.bsr-load-more-text').hide();
+                $button.find('.bsr-load-more-spinner').show();
+            } else {
+                $button.prop('disabled', false);
+                $button.find('.bsr-load-more-text').show();
+                $button.find('.bsr-load-more-spinner').hide();
+            }
+        },
+        
+        /**
+         * Hide load more button
+         */
+        hideLoadMoreButton: function(type) {
+            const $grid = type === 'brands' ? this.elements.brandsGrid : this.elements.typesGrid;
+            $grid.find('.bsr-load-more-container').fadeOut(300, function() {
+                $(this).remove();
+            });
+        },
+        
+        /**
+         * Show load more error
+         */
+        showLoadMoreError: function(type) {
+            const $button = this.getLoadMoreButton(type);
+            this.showLoadMoreLoading($button, false);
+            
+            // Temporarily show error message
+            const originalText = $button.find('.bsr-load-more-text').text();
+            $button.find('.bsr-load-more-text').text('Chyba pri načítavaní');
+            
+            setTimeout(function() {
+                $button.find('.bsr-load-more-text').text(originalText);
+            }, 3000);
+        },
+        
+        /**
          * Show empty state
          */
         showEmptyState: function(type) {
@@ -380,13 +538,10 @@
             
             // Add any responsive JavaScript adjustments here
             if (windowWidth < 768) {
-                // Mobile adjustments
                 this.adjustMobileLayout();
             } else if (windowWidth < 1024) {
-                // Tablet adjustments
                 this.adjustTabletLayout();
             } else {
-                // Desktop adjustments
                 this.adjustDesktopLayout();
             }
         },

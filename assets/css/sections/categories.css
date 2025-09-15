@@ -6,7 +6,7 @@
 /* Categories Section Base */
 .bsr-categories-section {
     padding: 60px 0;
-    background-color: var(--bsr-section-bg, #c8d4d0);
+    background: linear-gradient(227deg, var(--bsr-mint) 0%, #A8C8BB 100%);
 }
 
 .bsr-categories-section .bsr-container {
@@ -30,7 +30,6 @@
     justify-content: center;
     gap: 40px;
     margin-bottom: 40px;
-    border-bottom: 1px solid rgba(26, 61, 61, 0.2);
     padding-bottom: 10px;
 }
 
@@ -38,7 +37,7 @@
     background: none;
     border: none;
     font-size: 18px;
-    color: var(--bsr-text-secondary, #6b7c78);
+    color: var(--bsr-text-secondary, #12263A);
     cursor: pointer;
     padding: 10px 5px;
     position: relative;
@@ -46,8 +45,12 @@
     font-family: var(--bsr-font-primary, inherit);
 }
 
+
 .bsr-tab-button.active {
-    color: var(--bsr-primary-color, #00b5a5);
+    color: #06BCC1 !important;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 10px;
 }
 
 .bsr-tab-button.active::after {
@@ -57,11 +60,13 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: var(--bsr-primary-color, #00b5a5);
+    background-color: var(--bsr-primary-color, #06BCC1);
 }
 
-.bsr-tab-button:hover:not(.active) {
-    color: var(--bsr-text-primary, #1a3d3d);
+.bsr-tab-button:hover, .bsr-tab-button:focus, .bsr-tab-button:active, .bsr-tab-button:hover:not(.active) {
+    color: #06BCC1;
+    background: none !important;
+    background-color: none !important;
 }
 
 /* Categories Grid */
@@ -89,7 +94,7 @@
 
 /* Category Card */
 .bsr-category-card {
-    background: white;
+    background: #F2F2F2;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -140,11 +145,11 @@
 
 /* Brand title colors - cycling through palette */
 #bsr-brands-grid .bsr-category-card:nth-child(6n+1) .bsr-card-title {
-    color: #00b5a5; /* Teal */
+    color: #7b68ee; /* Purple */
 }
 
 #bsr-brands-grid .bsr-category-card:nth-child(6n+2) .bsr-card-title {
-    color: #ffb366; /* Orange */
+    color: #00b5a5; /* Teal */
 }
 
 #bsr-brands-grid .bsr-category-card:nth-child(6n+3) .bsr-card-title {
@@ -152,7 +157,7 @@
 }
 
 #bsr-brands-grid .bsr-category-card:nth-child(6n+4) .bsr-card-title {
-    color: #7b68ee; /* Purple */
+    color: #ffb366; /* Orange */
 }
 
 #bsr-brands-grid .bsr-category-card:nth-child(6n+5) .bsr-card-title {
@@ -183,9 +188,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #fef5f1 0%, #fce8df 100%);
     border-radius: 10px;
-    padding: 20px;
     position: relative;
 }
 
@@ -193,6 +196,12 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+
+/* Placeholder image specific styling */
+.bsr-card-image.bsr-placeholder-img {
+    opacity: 0.7;
+    filter: grayscale(100%);
 }
 
 .bsr-placeholder-image {
@@ -206,62 +215,78 @@
 /* Card Button */
 .bsr-card-button {
     display: inline-block;
-    background-color: var(--bsr-primary-color, #00b5a5);
-    color: white;
+    background-color: #06BCC1;
+    color: #F2F2F2;
     padding: 12px 24px;
     border-radius: 25px;
-    text-decoration: none;
+    text-decoration: none !important;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     text-align: center;
     margin: 0 auto 20px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .bsr-card-button:hover {
-    background-color: #009688;
+    background-color: #06BCC1;
     transform: scale(1.05);
-    color: white;
+    color: #F2F2F2;
 }
 
 /* Card Description */
 .bsr-card-description {
     margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
 }
 
 .bsr-description-text {
     font-size: 14px;
     line-height: 1.6;
     color: var(--bsr-text-secondary, #6b7c78);
-    margin: 0 0 10px 0;
+    margin: 0 0 15px 0;
     transition: max-height 0.3s ease;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
+/* Read More Button - Centered with arrow above */
 .bsr-read-more-btn {
-    background: none;
-    border: none;
-    color: var(--bsr-primary-color, #00b5a5);
+    background: none !important;
+    border: none !important;
+    color: var(--bsr-text-secondary, #6b7c78) !important;
     cursor: pointer;
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
     gap: 5px;
     font-size: 14px;
-    padding: 5px 0;
+    padding: 10px 0;
     transition: color 0.3s ease;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 .bsr-read-more-btn:hover {
-    color: #009688;
+    color: #1a3d3d !important;
 }
 
+/* Arrow above text */
 .bsr-arrow-icon {
     transition: transform 0.3s ease;
+    display: block !important;
+    margin: 0 auto 5px !important;
 }
 
+/* When expanded, flip arrow upward */
 .bsr-read-more-btn.expanded .bsr-arrow-icon {
     transform: rotate(180deg);
+}
+
+/* Hide the "Menej" text, only show arrow and main text */
+.bsr-more-text {
+    display: block !important;
+    text-align: center !important;
 }
 
 /* Loading State */
