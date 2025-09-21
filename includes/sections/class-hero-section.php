@@ -20,9 +20,9 @@ class BSR_Hero_Section {
     
     public function render($atts) {
         $atts = shortcode_atts(array(
-            'product_image' => BSR_PLUGIN_URL . 'assets/images/aha-medlar.png',
-            'product_title' => 'AHA medlar',
-            'product_price' => '14.90€',
+            'product_image' => BSR_PLUGIN_URL . 'assets/images/SlimControl.png',
+            'product_title' => 'Vlákninový nápojový prášok s glukomanánom na chudnutie',
+            'product_price' => '20.33€',
             'shop_url' => '/shop',
             'featured_products' => '', // JSON array of featured products
             'current_index' => 0
@@ -41,25 +41,25 @@ class BSR_Hero_Section {
                     'image' => $atts['product_image'],
                     'title' => $atts['product_title'],
                     'price' => $atts['product_price'],
-                    'url' => $atts['shop_url']
+                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/luxoya-slim'
                 ),
                 array(
-                    'image' => BSR_PLUGIN_URL . 'assets/images/aha-medlar.png',
-                    'title' => 'Vitamin C Brightening Serum',
-                    'price' => '22.50€',
-                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/hyaluron-peptid-kolagen-maska-100ml'
+                    'image' => BSR_PLUGIN_URL . 'assets/images/life-color-plus.png',
+                    'title' => 'FarmaVita Life Color Plus Profesionálna Krémová farba na vlasy',
+                    'price' => '3.46€',
+                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/farmavita-life-color-plus'
                 ),
                 array(
-                    'image' => BSR_PLUGIN_URL . 'assets/images/aha-medlar.png',
-                    'title' => 'Hydrating Night Cream',
-                    'price' => '18.75€',
-                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/hyaluron-peptid-kolagen-maska-100ml'
+                    'image' => BSR_PLUGIN_URL . 'assets/images/Ilcsi801.png',
+                    'title' => 'Ichtiolový korektor GOLD 12ml',
+                    'price' => '10.71€',
+                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/ichtiolovy-korektor-gold-12ml'
                 ),
                 array(
-                    'image' => BSR_PLUGIN_URL . 'assets/images/aha-medlar.png',
-                    'title' => 'Gentle Cleansing Oil',
-                    'price' => '16.20€',
-                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/hyaluron-peptid-kolagen-maska-100ml'
+                    'image' => BSR_PLUGIN_URL . 'assets/images/Luxlash.png',
+                    'title' => 'LuXLash Camellia Lashes B/hrúbka 0,05',
+                    'price' => '17.82€',
+                    'url' => 'https://cornflowerblue-monkey-838717.hostingersite.com/product/luxlash-camellia-lashes-bhrubka-005'
                 )
             );
         }

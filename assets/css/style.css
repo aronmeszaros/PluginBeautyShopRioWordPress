@@ -192,7 +192,7 @@
 /* ===== Beauty Shop Rio – Instagram feed polish ===== */
 /* Scope to this section only */
 .uagb-block-903e8ae4{
-    background: linear-gradient(227deg, var(--bsr-mint) 0%, #A8C8BB 100%);
+    background: #C4D7D0 !important;
 }
 .uagb-block-903e8ae4 #sb_instagram{
   --gap: 16px;
@@ -308,8 +308,8 @@
   font-weight: 600;
   font-size: 14px;
   box-shadow: var(--shadow);
-  background: var(--accent) !important;
-  color: #fff !important;
+  background: #F2F2F2 !important;
+  color: #12263A !important;
   transition: transform .2s ease, opacity .2s ease;
 }
 .uagb-block-903e8ae4 #sb_instagram .sbi_follow_btn svg{ display:none; } /* keep it compact */

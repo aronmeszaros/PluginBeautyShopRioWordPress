@@ -243,9 +243,9 @@ class BSR_Assets_Manager {
         $colors = get_option('bsr_colors', array(
             'mint' => '#B8D4C7',
             'cream' => '#F5F1E8',
-            'accent' => '#4ECDC4',
-            'text_dark' => '#2D2D2D',
-            'primary_color' => '#00b5a5', // Add primary color for categories
+            'accent' => '#06BCC1',
+            'text_dark' => '#12263A',
+            'primary_color' => '#06BCC1', // Add primary color for categories
             'section_bg' => '#c8d4d0' // Add section background
         ));
         
@@ -259,7 +259,7 @@ class BSR_Assets_Manager {
                 --bsr-primary-color: <?php echo esc_attr($colors['primary_color']); ?>;
                 --bsr-section-bg: <?php echo esc_attr($colors['section_bg']); ?>;
                 --bsr-text-primary: #1a3d3d;
-                --bsr-text-secondary: #6b7c78;
+                --bsr-text-secondary: #12263A;s
                 --bsr-container-width: 1200px;
                 --bsr-container-padding: 20px;
                 --bsr-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

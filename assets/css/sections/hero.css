@@ -231,10 +231,6 @@
     text-align: center;
 }
 
-.bsr-brand-section {
-    /*max-width: 400px;*/
-}
-
 .bsr-main-title {
     font-size: 3.5rem !important;
     font-weight: 100;
@@ -514,6 +510,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        color: var(--bsr-accent, #06BCC1);
     }
     
     /* Mobile Dots */

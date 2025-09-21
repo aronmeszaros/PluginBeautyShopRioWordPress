@@ -1,6 +1,6 @@
 /**
- * Beauty Shop Rio - Categories Section Styles
- * Modular CSS for categories component
+ * Beauty Shop Rio - Categories Section Styles with Load More
+ * Modular CSS for categories component with pagination
  */
 
 /* Categories Section Base */
@@ -289,6 +289,94 @@
     text-align: center !important;
 }
 
+/* Load More Button Styles */
+.bsr-load-more-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.bsr-load-more-btn {
+    background-color: #06BCC1;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 180px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bsr-load-more-btn:hover:not(:disabled) {
+    background-color: #05a3a8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(6, 188, 193, 0.3);
+}
+
+.bsr-load-more-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.bsr-load-more-text {
+    transition: opacity 0.3s ease;
+}
+
+/* Load More Spinner */
+.bsr-load-more-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bsr-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: bsrSpinLoader 0.8s linear infinite;
+}
+
+@keyframes bsrSpinLoader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* New Item Animation */
+.bsr-animate.bsr-new-item {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.6s ease;
+}
+
+.bsr-animate.bsr-new-item.bsr-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Stagger animations for new items */
+.bsr-new-item:nth-last-child(1) { transition-delay: 0.1s; }
+.bsr-new-item:nth-last-child(2) { transition-delay: 0.2s; }
+.bsr-new-item:nth-last-child(3) { transition-delay: 0.3s; }
+.bsr-new-item:nth-last-child(4) { transition-delay: 0.4s; }
+.bsr-new-item:nth-last-child(5) { transition-delay: 0.5s; }
+.bsr-new-item:nth-last-child(6) { transition-delay: 0.6s; }
+.bsr-new-item:nth-last-child(7) { transition-delay: 0.7s; }
+.bsr-new-item:nth-last-child(8) { transition-delay: 0.8s; }
+.bsr-new-item:nth-last-child(9) { transition-delay: 0.9s; }
+
 /* Loading State */
 .bsr-categories-loading {
     display: flex;
@@ -326,6 +414,25 @@
     margin: 0;
 }
 
+/* Existing animations for scroll-triggered items */
+.bsr-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.bsr-animate.bsr-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.bsr-stagger-1 { transition-delay: 0.1s; }
+.bsr-stagger-2 { transition-delay: 0.2s; }
+.bsr-stagger-3 { transition-delay: 0.3s; }
+.bsr-stagger-4 { transition-delay: 0.4s; }
+.bsr-stagger-5 { transition-delay: 0.5s; }
+.bsr-stagger-6 { transition-delay: 0.6s; }
+
 /* Tablet View */
 @media (max-width: 1024px) {
     .bsr-category-grid {
@@ -339,6 +446,12 @@
     
     .bsr-card-content {
         padding: 25px;
+    }
+    
+    .bsr-load-more-btn {
+        padding: 12px 25px;
+        font-size: 15px;
+        min-width: 160px;
     }
 }
 
@@ -373,6 +486,16 @@
     .bsr-card-image-wrapper {
         height: 180px;
     }
+    
+    .bsr-load-more-container {
+        margin-top: 30px;
+    }
+    
+    .bsr-load-more-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-width: 140px;
+    }
 }
 
 /* Extra Small Mobile */
@@ -396,5 +519,31 @@
     .bsr-card-button {
         padding: 10px 20px;
         font-size: 13px;
+    }
+    
+    .bsr-load-more-btn {
+        padding: 20px 20px;
+        font-size: 14px;
+        min-width: 120px;
+    }
+}
+
+/* Accessibility and Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .bsr-category-card,
+    .bsr-load-more-btn,
+    .bsr-animate,
+    .bsr-new-item,
+    .bsr-spinner {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .bsr-category-card:hover {
+        transform: none;
+    }
+    
+    .bsr-load-more-btn:hover:not(:disabled) {
+        transform: none;
     }
 }
