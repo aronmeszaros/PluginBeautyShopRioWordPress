@@ -1,14 +1,14 @@
 /* Beauty Shop Rio Plugin - Core Styles */
 
 :root {
-    --bsr-mint: #B8D4C7;
-    --bsr-cream: #F5F1E8;
+    --bsr-mint: #C4D7D0;
+    --bsr-cream: #F2F2F2;
     --bsr-white: #FFFFFF;
-    --bsr-gray-light: #F8F8F8;
-    --bsr-gray-medium: #E0E0E0;
+    --bsr-gray-light: #F2F2F2;
+    --bsr-gray-medium: #F2F2F2;
     --bsr-gray-dark: #666666;
-    --bsr-text-dark: #2D2D2D;
-    --bsr-accent: #4ECDC4;
+    --bsr-text-dark: #12263A;
+    --bsr-accent: #06BCC1;
     --bsr-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --bsr-radius: 12px;
     --bsr-radius-sm: 8px;
@@ -201,7 +201,7 @@
   --mint: var(--bsr-mint, #B8D4C7);
   --cream: var(--bsr-cream, #F5F1E8);
   --text: var(--bsr-text-dark, #2D2D2D);
-  --accent: var(--bsr-accent, #4ECDC4);
+  --accent: var(--bsr-accent, #06BCC1);
 }
 
 /* Section spacing */
